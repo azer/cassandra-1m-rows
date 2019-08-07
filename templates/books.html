@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"
+    />
+    <style type="text/css">
+      .grid-4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        justify-items: stretch;
+        align-items: stretch;
+      }
+
+      .center {
+        margin: 0 auto;
+      }
+
+      .zebra .row:nth-child(odd) {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="w-75 center zebra">
+      <header class="silver code mv5">
+        Mem: {{ .AllocBefore }}kb / {{ .AllocAfter }}kb
+      </header>
+      <h1>Books (Total: {{ .Total }})</h1>
+      <form method="post" action="/" class="mb5">
+        <label class="mr1">Skip:</label>
+        <input class="w-5 mr2" name="skip" type="text" value="{{ .Skip }}" />
+        <label class="mr1">Size:</label>
+        <input class="w-5" name="size" type="text" value="{{ .Size }}" />
+        <button>Go</button>
+      </form>
+
+      <div class="head grid-4 b mb3 tc">
+        <div>Title</div>
+        <div>Author</div>
+        <div>ISBN</div>
+        <div>Link</div>
+      </div>
+      {{ range .Books }}
+      <div class="row grid-4 pa3" title="{{ .Id }}">
+        <div>{{.Title}}</div>
+        <div class="tc">{{.Author}}</div>
+        <div class="tc">{{.ISBN}}</div>
+        <div class="tc">
+          <a href="https://goodreads.com/book/show/{{.Id}}">GoodReads</a>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </body>
+</html>
